@@ -15,8 +15,10 @@ set user_password=%2%
 set data_dmp_dir=%3%
 set size_of_perfile=%4%
 
+rem 'get default tablespace of user'
+sqlplus -S / as sysdba @exp_get_default_tablespace.sql %user_name% > %data_dmp_dir%\%user_name%.DMP
 rem '----------create logical directory-------'
-sqlplus / as sysdba @exp_create_dir.sql %user_name% %data_dmp_dir%
+sqlplus -S / as sysdba @exp_create_dir.sql %user_name% %data_dmp_dir%
 
 rem '--------expdp data of schema--------'
 expdp %user_name%/%user_password%  schemas=%user_name%  dumpfile=%user_name%_%%U.dmp directory=dmp_dir logfile=%user_name%.log  filesize=%size_of_perfile%

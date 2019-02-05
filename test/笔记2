@@ -1,0 +1,13 @@
+create user test003 identified by test003;
+grant resource, connect to test003;
+grant read ,write on directory dmp_dir to test003;
+impdp test003/test003 directory=dmp_dir dumpfile=test001_%U.dmp logfile=test003.log 
+
+
+create user test004 identified by test004;
+grant resource, connect to test004;
+create directory dmp_test004_dir as 'E:/oracle/test004';
+grant read ,write on directory dmp_dir to test004;
+quit;
+expdp test004/test004 schemas=test004 directory=dmp_test004_dir dumpfile=test004_%U.dmp logfile=test004.log filesize=5M 
+
