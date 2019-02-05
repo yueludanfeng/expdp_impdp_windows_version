@@ -7,6 +7,7 @@ useable files are in expdp and impdp directories
 
 #导出数据库
 cd expdp
+
 exp_main.bat test004 test004  E:/oracle/test004 5M
 
 ### 参数详解：
@@ -21,6 +22,7 @@ size_of_perfile：限制每个导出文件的大小，单位为M，G等
 
 # 导入数据库
 cd impdp
+
 imp_main.bat test005 test005 E:/oracle/test005 5G test test004 TEST005_
 
 ### 参数详解：
