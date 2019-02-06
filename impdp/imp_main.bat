@@ -3,7 +3,7 @@
 rem echo '------------make sure the num of  param is correct--------'
 set /a num=0
 set /a num_of_params=7
-for %%a in (%*) do set num+=1
+for %%a in (%*) do set /a num+=1
 if %num% neq %num_of_params% (
 	echo 'please input %num_of_params% seven args as follows: username, userpasswd, dmp_dir_path size_per_file local_tablespace_name source_user_name dumpfile_prefix'
 	echo 'eg:  imp_main.bat test005 test005 E:/oracle/test005 5G test test004 TEST005_'
@@ -18,6 +18,7 @@ set local_tablespace_name=%5%
 set source_user_name=%6%
 set dump_file_prefix=%7%
 
+sqlplus -S  / as sysdba @get_default_permanent_tablespace.sql > res_of_default_permanent_tablespace.txt
 sqlplus -S  / as sysdba @get_datafile.sql >  res_of_datafile.txt
 set datafile=''
 set prefix_data_file=''
@@ -36,4 +37,4 @@ sqlplus -S / as sysdba @imp_create_dir.sql  %user_name% %user_password% %data_di
 impdp %user_name%/%user_password% DIRECTORY=imp_dir DUMPFILE=%dump_file_prefix%%%U.dmp  logfile=%user_name%.log remap_schema=%source_user_name%:%user_name% 
 rem remap_tablespace=users:test
 
-del /a /f /q *.txt
+del  res_of_datafile.txt
